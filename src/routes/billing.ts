@@ -101,9 +101,7 @@ export async function billingRoutes(app: FastifyInstance, { pool, config }: AppD
     }
 
     const card = { brand: cardBrand(number), last4: number.slice(-4), expMonth, expYear };
-    const result = await withTransaction(pool, (client) =>
-      updateCard(client, customer, card, now),
-    );
+    const result = await withTransaction(pool, (client) => updateCard(client, customer, card, now));
     const notice =
       result.kind === 'saved'
         ? 'card-saved'

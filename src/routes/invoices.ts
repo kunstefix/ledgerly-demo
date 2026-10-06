@@ -169,7 +169,12 @@ export async function invoiceRoutes(app: FastifyInstance, { pool, config }: AppD
         title: 'Not found',
         section: 'invoices',
         status: 404,
-        body: invoicesPage([], customer, await usageFor(pool, customer, config.now()), config.now()),
+        body: invoicesPage(
+          [],
+          customer,
+          await usageFor(pool, customer, config.now()),
+          config.now(),
+        ),
         flash: { kind: 'error', text: 'That invoice does not exist.' },
       });
     }

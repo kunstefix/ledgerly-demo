@@ -22,7 +22,7 @@ export function prorationAmount(change: PlanChange): number {
   if (periodMs <= 0) return 0;
 
   const at = Math.min(Math.max(changeAt.getTime(), periodStart.getTime()), periodEnd.getTime());
-  const remaining = (periodEnd.getTime() - at) / periodMs;
+  const fraction = (at - periodStart.getTime()) / periodMs;
 
-  return Math.round((newPriceCents - currentPriceCents) * remaining);
+  return Math.round((newPriceCents - currentPriceCents) * fraction);
 }

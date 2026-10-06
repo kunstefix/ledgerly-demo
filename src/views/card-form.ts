@@ -18,8 +18,12 @@ export function cardFormPage(error: string | null): SafeHtml {
         <input name="number" inputmode="numeric" placeholder="4242 4242 4242 4242" required
       /></label>
       <div class="form-row">
-        <label>Expiry month <input name="expMonth" type="number" min="1" max="12" required /></label>
-        <label>Expiry year <input name="expYear" type="number" min="2024" max="2099" required /></label>
+        <label
+          >Expiry month <input name="expMonth" type="number" min="1" max="12" required
+        /></label>
+        <label
+          >Expiry year <input name="expYear" type="number" min="2024" max="2099" required
+        /></label>
         <label>CVC <input name="cvc" inputmode="numeric" maxlength="4" required /></label>
       </div>
       <details class="muted">

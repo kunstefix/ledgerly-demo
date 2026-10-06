@@ -61,6 +61,14 @@ export async function getSubscription(db: Db, customerId: number): Promise<Subsc
   if (!row) return null;
   const plan = await getPlan(db, row.planId);
   if (!plan) throw new Error(`Unknown plan ${row.planId}`);
-  const { planId: _planId, ...rest } = row;
-  return { ...rest, plan };
+  return {
+    id: row.id,
+    customerId: row.customerId,
+    plan,
+    billingInterval: row.billingInterval,
+    status: row.status,
+    currentPeriodStart: row.currentPeriodStart,
+    currentPeriodEnd: row.currentPeriodEnd,
+    canceledAt: row.canceledAt,
+  };
 }

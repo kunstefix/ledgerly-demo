@@ -53,14 +53,18 @@ describe('seed', () => {
         `SELECT count(*) FROM billing_invoices WHERE created_at < now() - interval '5 months'`,
       ),
     ).toBeGreaterThan(0);
-    expect(await count(first, `SELECT count(*) FROM payments WHERE status = 'failed'`)).toBeGreaterThan(
-      0,
-    );
+    expect(
+      await count(first, `SELECT count(*) FROM payments WHERE status = 'failed'`),
+    ).toBeGreaterThan(0);
     expect(await count(first, 'SELECT count(*) FROM payment_retries')).toBeGreaterThan(0);
   });
 
   it('has the named personas in their documented state', async () => {
-    const { rows } = await first.pool.query<{ external_id: string; plan_id: string; status: string }>(
+    const { rows } = await first.pool.query<{
+      external_id: string;
+      plan_id: string;
+      status: string;
+    }>(
       `SELECT c.external_id, s.plan_id, s.status FROM customers c
          JOIN subscriptions s ON s.customer_id = c.id`,
     );
@@ -95,8 +99,16 @@ describe('seed', () => {
   });
 
   it('loads the same data every time, relative to load time', async () => {
-    const tables = ['customers', 'cards', 'subscriptions', 'billing_invoices', 'payments',
-      'payment_retries', 'invoices', 'invoice_lines'];
+    const tables = [
+      'customers',
+      'cards',
+      'subscriptions',
+      'billing_invoices',
+      'payments',
+      'payment_retries',
+      'invoices',
+      'invoice_lines',
+    ];
     for (const table of tables) {
       const [a, b] = await Promise.all(
         [first, second].map(async (db) => {

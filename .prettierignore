@@ -5,3 +5,4 @@ db/seed.sql
 intent/
 .claude/
 CLAUDE.md
+.prettierrc

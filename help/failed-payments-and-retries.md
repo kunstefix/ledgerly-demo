@@ -10,11 +10,11 @@ collection: Payments
 If we can't charge your card on your billing date, your subscription becomes **Past due**
 and we retry the payment automatically **3 times over 7 days**:
 
-| Retry | When                         |
-| ----- | ---------------------------- |
-| 1     | 1 day after the failure      |
-| 2     | 3 days after the failure     |
-| 3     | 7 days after the failure     |
+| Retry | When                     |
+| ----- | ------------------------ |
+| 1     | 1 day after the failure  |
+| 2     | 3 days after the failure |
+| 3     | 7 days after the failure |
 
 You keep full access while we retry. Your dashboard and Billing page show the next retry
 date.

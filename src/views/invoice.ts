@@ -19,16 +19,20 @@ export function invoicePage(
         <h1>${invoice.number} ${badge(displayStatus(invoice, customer, now))}</h1>
       </div>
       <div class="actions">
-        ${invoice.status === 'draft'
-          ? html`<form method="post" action="/invoices/${invoice.number}/send">
-              <button class="button" type="submit">Send invoice</button>
-            </form>`
-          : null}
-        ${invoice.status !== 'paid'
-          ? html`<form method="post" action="/invoices/${invoice.number}/delete">
-              <button class="button button-secondary" type="submit">Delete</button>
-            </form>`
-          : null}
+        ${
+          invoice.status === 'draft'
+            ? html`<form method="post" action="/invoices/${invoice.number}/send">
+                <button class="button" type="submit">Send invoice</button>
+              </form>`
+            : null
+        }
+        ${
+          invoice.status !== 'paid'
+            ? html`<form method="post" action="/invoices/${invoice.number}/delete">
+                <button class="button button-secondary" type="submit">Delete</button>
+              </form>`
+            : null
+        }
       </div>
     </div>
     <section class="card invoice">
@@ -42,14 +46,18 @@ export function invoicePage(
           <dd>${formatDueDate(invoice.issueDate, tz)}</dd>
           <dt>Due</dt>
           <dd>${formatDueDate(invoice.dueDate, tz)}</dd>
-          ${invoice.sentAt
-            ? html`<dt>Sent</dt>
-                <dd>${formatTimestamp(invoice.sentAt, tz)}</dd>`
-            : null}
-          ${invoice.paidAt
-            ? html`<dt>Paid</dt>
-                <dd>${formatTimestamp(invoice.paidAt, tz)}</dd>`
-            : null}
+          ${
+            invoice.sentAt
+              ? html`<dt>Sent</dt>
+                  <dd>${formatTimestamp(invoice.sentAt, tz)}</dd>`
+              : null
+          }
+          ${
+            invoice.paidAt
+              ? html`<dt>Paid</dt>
+                  <dd>${formatTimestamp(invoice.paidAt, tz)}</dd>`
+              : null
+          }
         </dl>
       </div>
       <table class="table">
@@ -90,6 +98,13 @@ export function invoicePage(
           </tr>
         </tfoot>
       </table>
-      ${invoice.notes ? html`<div class="notes"><h2 class="card-title">Notes</h2><p>${invoice.notes}</p></div>` : null}
+      ${
+        invoice.notes
+          ? html`<div class="notes">
+              <h2 class="card-title">Notes</h2>
+              <p>${invoice.notes}</p>
+            </div>`
+          : null
+      }
     </section>`;
 }

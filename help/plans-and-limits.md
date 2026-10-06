@@ -9,11 +9,11 @@ collection: Plans and billing
 
 Ledgerly has three plans:
 
-| Plan     | Price                      | Invoices per month |
-| -------- | -------------------------- | ------------------ |
-| Starter  | Free                       | 5                  |
-| Pro      | $29/month or $290/year     | 200                |
-| Business | $99/month or $990/year     | Unlimited          |
+| Plan     | Price                  | Invoices per month |
+| -------- | ---------------------- | ------------------ |
+| Starter  | Free                   | 5                  |
+| Pro      | $29/month or $290/year | 200                |
+| Business | $99/month or $990/year | Unlimited          |
 
 Prices are the same number in euros for customers billed in EUR.
 

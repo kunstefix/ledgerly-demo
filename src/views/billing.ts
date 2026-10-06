@@ -33,32 +33,40 @@ export function billingPage(props: BillingProps): SafeHtml {
   const failing = billingInvoices.find((invoice) => invoice.status === 'open');
 
   return html`<div class="page-head"><h1>Billing</h1></div>
-    ${failing
-      ? html`<div class="alert">
-          We couldn't collect ${money(failing.amountCents, failing.currency)} for
-          ${failing.number}.
-          ${retries[0]
-            ? html`Retry ${retries[0].attempt} of 3 is scheduled for
-              ${formatTimestamp(retries[0].scheduledFor, tz)}.`
-            : null}
-          <a href="/billing/card">Update your card</a> to retry now.
-        </div>`
-      : null}
+    ${
+      failing
+        ? html`<div class="alert">
+            We couldn't collect ${money(failing.amountCents, failing.currency)} for
+            ${failing.number}.
+            ${
+              retries[0]
+                ? html`Retry ${retries[0].attempt} of 3 is scheduled for
+                  ${formatTimestamp(retries[0].scheduledFor, tz)}.`
+                : null
+            }
+            <a href="/billing/card">Update your card</a> to retry now.
+          </div>`
+        : null
+    }
     <div class="grid grid-2">
       <section class="card">
         <h2 class="card-title">Subscription</h2>
         <p class="stat-sm">${subscription.plan.name} ${badge(subscription.status)}</p>
         <p class="muted">
-          ${price === 0
-            ? 'Free'
-            : html`${money(price, customer.currency)}${perInterval(subscription.billingInterval)}`}
+          ${
+            price === 0
+              ? 'Free'
+              : html`${money(price, customer.currency)}${perInterval(subscription.billingInterval)}`
+          }
           · ${intervalLabel(subscription.billingInterval)}
         </p>
         <p class="muted">
-          ${subscription.status === 'canceled' && subscription.canceledAt
-            ? html`Canceled on ${formatDay(subscription.canceledAt, tz)}.`
-            : html`Current period ${formatDay(subscription.currentPeriodStart, tz)} –
-              ${formatDay(subscription.currentPeriodEnd, tz)}`}
+          ${
+            subscription.status === 'canceled' && subscription.canceledAt
+              ? html`Canceled on ${formatDay(subscription.canceledAt, tz)}.`
+              : html`Current period ${formatDay(subscription.currentPeriodStart, tz)} –
+                ${formatDay(subscription.currentPeriodEnd, tz)}`
+          }
         </p>
         <a class="button button-secondary" href="/billing/plan">
           ${subscription.status === 'canceled' ? 'Restart subscription' : 'Change plan'}
@@ -72,72 +80,75 @@ export function billingPage(props: BillingProps): SafeHtml {
     </div>
     <section class="card">
       <h2 class="card-title">Billing invoices</h2>
-      ${billingInvoices.length === 0
-        ? html`<p class="muted">Nothing billed yet.</p>`
-        : html`<table class="table">
-            <thead>
-              <tr>
-                <th>Number</th>
-                <th>Date</th>
-                <th class="hide-sm">Description</th>
-                <th class="num">Amount</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${billingInvoices.map(
-                (invoice) =>
-                  html`<tr>
-                    <td>${invoice.number}</td>
-                    <td>${formatDay(invoice.createdAt, tz)}</td>
-                    <td class="hide-sm">${invoice.description}</td>
-                    <td class="num">${money(invoice.amountCents, invoice.currency)}</td>
-                    <td>${badge(invoice.status)}</td>
-                  </tr>`,
-              )}
-            </tbody>
-          </table>`}
+      ${
+        billingInvoices.length === 0
+          ? html`<p class="muted">Nothing billed yet.</p>`
+          : html`<table class="table">
+              <thead>
+                <tr>
+                  <th>Number</th>
+                  <th>Date</th>
+                  <th class="hide-sm">Description</th>
+                  <th class="num">Amount</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${billingInvoices.map(
+                  (invoice) =>
+                    html`<tr>
+                      <td>${invoice.number}</td>
+                      <td>${formatDay(invoice.createdAt, tz)}</td>
+                      <td class="hide-sm">${invoice.description}</td>
+                      <td class="num">${money(invoice.amountCents, invoice.currency)}</td>
+                      <td>${badge(invoice.status)}</td>
+                    </tr>`,
+                )}
+              </tbody>
+            </table>`
+      }
     </section>
     <section class="card">
       <h2 class="card-title">Payments</h2>
-      ${payments.length === 0
-        ? html`<p class="muted">No payments yet.</p>`
-        : html`<table class="table">
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th class="hide-sm">Invoice</th>
-                <th class="num">Amount</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${payments.map(
-                (payment) =>
-                  html`<tr>
-                    <td>${formatTimestamp(payment.attemptedAt, tz)}</td>
-                    <td class="hide-sm">${payment.billingInvoiceNumber}</td>
-                    <td class="num">${money(payment.amountCents, payment.currency)}</td>
-                    <td>
-                      ${badge(payment.status)}
-                      ${payment.failureCode
-                        ? html`<div class="failure">
-                            <code>${payment.failureCode}</code> ${explainFailure(payment.failureCode)}
-                          </div>`
-                        : null}
-                    </td>
-                  </tr>`,
-              )}
-            </tbody>
-          </table>`}
+      ${
+        payments.length === 0
+          ? html`<p class="muted">No payments yet.</p>`
+          : html`<table class="table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th class="hide-sm">Invoice</th>
+                  <th class="num">Amount</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${payments.map(
+                  (payment) =>
+                    html`<tr>
+                      <td>${formatTimestamp(payment.attemptedAt, tz)}</td>
+                      <td class="hide-sm">${payment.billingInvoiceNumber}</td>
+                      <td class="num">${money(payment.amountCents, payment.currency)}</td>
+                      <td>
+                        ${badge(payment.status)}
+                        ${
+                          payment.failureCode
+                            ? html`<div class="failure">
+                                <code>${payment.failureCode}</code>
+                                ${explainFailure(payment.failureCode)}
+                              </div>`
+                            : null
+                        }
+                      </td>
+                    </tr>`,
+                )}
+              </tbody>
+            </table>`
+      }
     </section>`;
 }
 
-export function planPage(
-  customer: Customer,
-  subscription: Subscription,
-  plans: Plan[],
-): SafeHtml {
+export function planPage(customer: Customer, subscription: Subscription, plans: Plan[]): SafeHtml {
   const interval = subscription.billingInterval;
   const canceled = subscription.status === 'canceled';
   return html`<div class="page-head">
@@ -145,9 +156,11 @@ export function planPage(
         <p class="crumbs"><a href="/billing">Billing</a> /</p>
         <h1>${canceled ? 'Restart subscription' : 'Change plan'}</h1>
         <p class="muted">
-          ${canceled
-            ? 'Your new period starts today.'
-            : 'Upgrades are charged right away for the rest of this period; downgrades leave a credit.'}
+          ${
+            canceled
+              ? 'Your new period starts today.'
+              : 'Upgrades are charged right away for the rest of this period; downgrades leave a credit.'
+          }
         </p>
       </div>
     </div>
@@ -163,16 +176,20 @@ export function planPage(
             >
           </p>
           <p class="muted">
-            ${plan.monthlyInvoiceLimit === null
-              ? 'Unlimited invoices'
-              : `${plan.monthlyInvoiceLimit} invoices a month`}
+            ${
+              plan.monthlyInvoiceLimit === null
+                ? 'Unlimited invoices'
+                : `${plan.monthlyInvoiceLimit} invoices a month`
+            }
           </p>
-          ${current
-            ? html`<p class="muted"><strong>Current plan</strong></p>`
-            : html`<form method="post" action="/billing/plan">
-                <input type="hidden" name="plan" value="${plan.id}" />
-                <button class="button" type="submit">Switch to ${plan.name}</button>
-              </form>`}
+          ${
+            current
+              ? html`<p class="muted"><strong>Current plan</strong></p>`
+              : html`<form method="post" action="/billing/plan">
+                  <input type="hidden" name="plan" value="${plan.id}" />
+                  <button class="button" type="submit">Switch to ${plan.name}</button>
+                </form>`
+          }
         </section>`;
       })}
     </div>`;

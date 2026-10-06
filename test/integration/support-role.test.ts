@@ -89,7 +89,10 @@ describe('loopback_reader', () => {
     for (const [view, columns] of Object.entries(VIEW_COLUMNS)) {
       const result = await reader.query(`SELECT * FROM support.${view} LIMIT 5`);
       expect(result.rows.length, view).toBeGreaterThan(0);
-      expect(result.fields.map((f) => f.name), view).toEqual(columns);
+      expect(
+        result.fields.map((f) => f.name),
+        view,
+      ).toEqual(columns);
     }
   });
 

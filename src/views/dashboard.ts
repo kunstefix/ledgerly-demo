@@ -43,9 +43,11 @@ function nextPayment(props: DashboardProps): SafeHtml {
     return html`<p class="stat danger">${money(openInvoice.amountCents, openInvoice.currency)}</p>
       <p class="muted">
         Payment failed.
-        ${nextRetry
-          ? html`We'll retry on ${formatDay(nextRetry.scheduledFor, customer.timezone)}.`
-          : null}
+        ${
+          nextRetry
+            ? html`We'll retry on ${formatDay(nextRetry.scheduledFor, customer.timezone)}.`
+            : null
+        }
         <a href="/billing/card">Update card</a>
       </p>`;
   }
@@ -68,21 +70,25 @@ export function dashboardPage(props: DashboardProps): SafeHtml {
       </div>
       <a class="button" href="/invoices/new">New invoice</a>
     </div>
-    ${props.openInvoice
-      ? html`<div class="alert">
-          A payment of ${money(props.openInvoice.amountCents, props.openInvoice.currency)}
-          failed. <a href="/billing">See billing</a>
-        </div>`
-      : null}
+    ${
+      props.openInvoice
+        ? html`<div class="alert">
+            A payment of ${money(props.openInvoice.amountCents, props.openInvoice.currency)} failed.
+            <a href="/billing">See billing</a>
+          </div>`
+        : null
+    }
     <div class="grid">
       <section class="card">
         <h2 class="card-title">Plan</h2>
         <p class="stat">${subscription.plan.name} ${badge(subscription.status)}</p>
         <p class="muted">
-          ${price === 0
-            ? 'Free'
-            : html`${money(price, customer.currency)}${perInterval(subscription.billingInterval)}
-              · ${intervalLabel(subscription.billingInterval)}`}
+          ${
+            price === 0
+              ? 'Free'
+              : html`${money(price, customer.currency)}${perInterval(subscription.billingInterval)}
+                · ${intervalLabel(subscription.billingInterval)}`
+          }
           · <a href="/billing/plan">Change plan</a>
         </p>
       </section>
@@ -100,8 +106,10 @@ export function dashboardPage(props: DashboardProps): SafeHtml {
         <h2 class="card-title">Recent invoices</h2>
         <a href="/invoices">View all</a>
       </div>
-      ${recentInvoices.length === 0
-        ? html`<p class="muted">No invoices yet.</p>`
-        : invoiceRows(recentInvoices, customer, now)}
+      ${
+        recentInvoices.length === 0
+          ? html`<p class="muted">No invoices yet.</p>`
+          : invoiceRows(recentInvoices, customer, now)
+      }
     </section>`;
 }

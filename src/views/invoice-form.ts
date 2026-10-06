@@ -41,12 +41,14 @@ export function invoiceFormPage(
       </div>
     </div>
     ${error ? html`<div class="flash flash-error" role="alert">${error}</div>` : null}
-    ${!usage.allowed
-      ? html`<div class="alert">
-          You've reached your plan's limit of ${usage.limit} invoices this month.
-          <a href="/billing/plan">Upgrade</a> to send more.
-        </div>`
-      : null}
+    ${
+      !usage.allowed
+        ? html`<div class="alert">
+            You've reached your plan's limit of ${usage.limit} invoices this month.
+            <a href="/billing/plan">Upgrade</a> to send more.
+          </div>`
+        : null
+    }
     <form class="card form" method="post" action="/invoices">
       <div class="form-row">
         <label>Client name <input name="clientName" required value="${values.clientName}" /></label>
@@ -56,10 +58,18 @@ export function invoiceFormPage(
         /></label>
       </div>
       <div class="form-row">
-        <label>Issue date <input name="issueDate" type="date" required value="${values.issueDate}" /></label>
+        <label
+          >Issue date <input name="issueDate" type="date" required value="${values.issueDate}"
+        /></label>
         <label
           >Due in (days)
-          <input name="dueInDays" type="number" min="0" max="120" required value="${values.dueInDays}"
+          <input
+            name="dueInDays"
+            type="number"
+            min="0"
+            max="120"
+            required
+            value="${values.dueInDays}"
         /></label>
       </div>
       <fieldset>
@@ -70,14 +80,19 @@ export function invoiceFormPage(
               <label class="grow"
                 >Description <input name="line${i}Description" value="${line.description}"
               /></label>
-              <label>Qty <input name="line${i}Quantity" type="number" min="1" value="${line.quantity}" /></label>
               <label
-                >Unit price
-                <input name="line${i}UnitPrice" inputmode="decimal" placeholder="0.00" value="${line.unitPrice}"
+                >Qty <input name="line${i}Quantity" type="number" min="1" value="${line.quantity}"
               /></label>
               <label
-                >VAT %
-                <input name="line${i}VatRate" inputmode="decimal" value="${line.vatRate}"
+                >Unit price
+                <input
+                  name="line${i}UnitPrice"
+                  inputmode="decimal"
+                  placeholder="0.00"
+                  value="${line.unitPrice}"
+              /></label>
+              <label
+                >VAT % <input name="line${i}VatRate" inputmode="decimal" value="${line.vatRate}"
               /></label>
             </div>`,
         )}

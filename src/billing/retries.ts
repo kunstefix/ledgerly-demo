@@ -19,9 +19,7 @@ export interface DunningState {
   startedAt: Date;
 }
 
-export type RetryDecision =
-  | { action: 'retry'; attempt: number; at: Date }
-  | { action: 'cancel' };
+export type RetryDecision = { action: 'retry'; attempt: number; at: Date } | { action: 'cancel' };
 
 /** The first retry after the initial payment failed at `failedAt`. */
 export function startDunning(failedAt: Date): { state: DunningState; next: RetryDecision } {
@@ -39,8 +37,8 @@ export function afterFailedRetry(state: DunningState): {
 }
 
 /** The customer updated their card: restart the schedule and retry now. */
-export function afterCardUpdated(_state: DunningState, now: Date): DunningState {
-  return { retryCount: 0, startedAt: now };
+export function afterCardUpdated(state: DunningState, now: Date): DunningState {
+  return { ...state, startedAt: now };
 }
 
 export function nextRetry(state: DunningState): RetryDecision {

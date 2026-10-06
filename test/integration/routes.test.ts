@@ -97,8 +97,15 @@ describe('pages', () => {
     expect(rows).toHaveLength(12);
     for (const { external_id } of rows) {
       const cookie = await signIn(app, external_id);
-      for (const url of ['/dashboard', '/invoices', '/invoices/new', '/billing', '/billing/plan',
-        '/billing/card', '/internal']) {
+      for (const url of [
+        '/dashboard',
+        '/invoices',
+        '/invoices/new',
+        '/billing',
+        '/billing/plan',
+        '/billing/card',
+        '/internal',
+      ]) {
         const response = await get(url, cookie);
         expect(response.statusCode, `${external_id} ${url}`).toBe(200);
         expect(response.headers['content-type']).toContain('text/html');

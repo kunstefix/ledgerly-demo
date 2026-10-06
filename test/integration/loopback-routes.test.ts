@@ -29,7 +29,13 @@ function frontMatter(markdown: string): Record<string, string> | null {
   return Object.fromEntries(
     match[1]!.split('\n').map((line) => {
       const [key, ...rest] = line.split(':');
-      return [key!.trim(), rest.join(':').trim().replace(/^"(.*)"$/, '$1')];
+      return [
+        key!.trim(),
+        rest
+          .join(':')
+          .trim()
+          .replace(/^"(.*)"$/, '$1'),
+      ];
     }),
   );
 }

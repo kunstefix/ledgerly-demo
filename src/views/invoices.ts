@@ -50,16 +50,20 @@ export function invoicesPage(
       <div>
         <h1>Invoices</h1>
         <p class="muted">
-          ${usage.limit === null
-            ? html`${usage.used} this month · unlimited on your plan`
-            : html`${usage.used} of ${usage.limit} this month`}
+          ${
+            usage.limit === null
+              ? html`${usage.used} this month · unlimited on your plan`
+              : html`${usage.used} of ${usage.limit} this month`
+          }
         </p>
       </div>
       <a class="button" href="/invoices/new">New invoice</a>
     </div>
     <section class="card">
-      ${invoices.length === 0
-        ? html`<p class="muted">No invoices yet. Create your first one.</p>`
-        : invoiceRows(invoices, customer, now)}
+      ${
+        invoices.length === 0
+          ? html`<p class="muted">No invoices yet. Create your first one.</p>`
+          : invoiceRows(invoices, customer, now)
+      }
     </section>`;
 }

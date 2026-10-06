@@ -21,13 +21,9 @@ export function lineNetCents(line: LineInput): number {
 export function invoiceTotals(lines: LineInput[]): Totals {
   const subtotalCents = lines.reduce((sum, line) => sum + lineNetCents(line), 0);
 
-  const netByRate = new Map<number, number>();
-  for (const line of lines) {
-    netByRate.set(line.vatRateBps, (netByRate.get(line.vatRateBps) ?? 0) + lineNetCents(line));
-  }
   let vatCents = 0;
-  for (const [rateBps, net] of netByRate) {
-    vatCents += Math.round((net * rateBps) / 10_000);
+  for (const line of lines) {
+    vatCents += Math.round((lineNetCents(line) * line.vatRateBps) / 10_000);
   }
 
   return { subtotalCents, vatCents, totalCents: subtotalCents + vatCents };

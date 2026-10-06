@@ -21,8 +21,7 @@ export function monthStart(now: Date): Date {
 }
 
 export function countsTowardLimit(invoice: InvoiceForLimit, now: Date): boolean {
-  if (invoice.createdAt < monthStart(now)) return false;
-  return invoice.status !== 'draft' && invoice.deletedAt === null;
+  return invoice.createdAt >= monthStart(now);
 }
 
 export function checkInvoiceLimit(

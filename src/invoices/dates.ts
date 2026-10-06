@@ -8,17 +8,9 @@
 const DATE_RE = /^(\d{4})-(\d{2})-(\d{2})$/;
 
 /** Formats a calendar date like "Oct 20, 2026". */
-export function formatDueDate(isoDate: string, _timezone: string): string {
-  const match = DATE_RE.exec(isoDate);
-  if (!match) return isoDate;
-  const [, y, m, d] = match;
-  const asUtc = new Date(Date.UTC(Number(y), Number(m) - 1, Number(d)));
-  return new Intl.DateTimeFormat('en-US', {
-    timeZone: 'UTC',
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  }).format(asUtc);
+export function formatDueDate(isoDate: string, timezone: string): string {
+  if (!DATE_RE.test(isoDate)) return isoDate;
+  return formatDay(new Date(isoDate), timezone);
 }
 
 /** Formats an instant in the customer's timezone, like "Oct 20, 2026, 3:04 PM". */

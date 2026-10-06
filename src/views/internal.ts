@@ -11,15 +11,17 @@ export function internalPage(result: TickSummary | null): SafeHtml {
     <section class="card">
       <h2 class="card-title">Daily billing job</h2>
       <p>
-        Renews subscriptions whose period has ended and runs payment retries that are due, so
-        failed payments move along.
+        Renews subscriptions whose period has ended and runs payment retries that are due, so failed
+        payments move along.
       </p>
-      ${result
-        ? html`<p class="flash flash-ok">
-            Renewed ${result.renewed} subscriptions. Retries: ${result.succeeded} succeeded,
-            ${result.failed} failed, ${result.canceled} subscriptions canceled.
-          </p>`
-        : null}
+      ${
+        result
+          ? html`<p class="flash flash-ok">
+              Renewed ${result.renewed} subscriptions. Retries: ${result.succeeded} succeeded,
+              ${result.failed} failed, ${result.canceled} subscriptions canceled.
+            </p>`
+          : null
+      }
       <form method="post" action="/internal/billing-tick">
         <button class="button" type="submit">Run billing job now</button>
       </form>

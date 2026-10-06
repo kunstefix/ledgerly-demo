@@ -73,10 +73,7 @@ export async function listPayments(db: Db, customerId: number): Promise<Payment[
   return rows;
 }
 
-export async function listScheduledRetries(
-  db: Db,
-  customerId: number,
-): Promise<ScheduledRetry[]> {
+export async function listScheduledRetries(db: Db, customerId: number): Promise<ScheduledRetry[]> {
   const { rows } = await db.query<ScheduledRetry>(
     `SELECT r.id, r.billing_invoice_id AS "billingInvoiceId", b.number AS "billingInvoiceNumber",
             r.attempt, r.scheduled_for AS "scheduledFor"

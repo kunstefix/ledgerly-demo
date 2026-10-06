@@ -17,8 +17,8 @@ export function homePage(customers: CustomerListItem[]): SafeHtml {
   return html`<section class="hero">
       <h1>Sign in to the Ledgerly demo</h1>
       <p class="lead">
-        Pick a customer to browse their account and chat with support. There are no passwords:
-        this is a demo and everything here is fake.
+        Pick a customer to browse their account and chat with support. There are no passwords: this
+        is a demo and everything here is fake.
       </p>
     </section>
     <div class="card">
@@ -38,11 +38,16 @@ export function homePage(customers: CustomerListItem[]): SafeHtml {
                 <td>
                   <strong>${c.companyName}</strong>
                   <div class="muted">${c.contactName} · <code>${c.externalId}</code></div>
-                  ${DEMO_HINTS[c.externalId]
-                    ? html`<div class="hint">${DEMO_HINTS[c.externalId]}</div>`
-                    : null}
+                  ${
+                    DEMO_HINTS[c.externalId]
+                      ? html`<div class="hint">${DEMO_HINTS[c.externalId]}</div>`
+                      : null
+                  }
                 </td>
-                <td>${c.planName} ${c.subscriptionStatus !== 'active' ? badge(c.subscriptionStatus) : null}</td>
+                <td>
+                  ${c.planName}
+                  ${c.subscriptionStatus !== 'active' ? badge(c.subscriptionStatus) : null}
+                </td>
                 <td class="hide-sm">${c.country}</td>
                 <td class="actions">
                   <form method="post" action="/session">

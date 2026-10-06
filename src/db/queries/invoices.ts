@@ -128,7 +128,14 @@ export async function createInvoice(
       `INSERT INTO invoice_lines (invoice_id, position, description, quantity, unit_price_cents,
                                   vat_rate_bps)
        VALUES ($1, $2, $3, $4, $5, $6)`,
-      [invoiceId, position + 1, line.description, line.quantity, line.unitPriceCents, line.vatRateBps],
+      [
+        invoiceId,
+        position + 1,
+        line.description,
+        line.quantity,
+        line.unitPriceCents,
+        line.vatRateBps,
+      ],
     );
   }
   return number;

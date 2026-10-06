@@ -607,7 +607,15 @@ export function buildSeedSql(): string {
     ),
     insert(
       'invoice_lines',
-      ['id', 'invoice_id', 'position', 'description', 'quantity', 'unit_price_cents', 'vat_rate_bps'],
+      [
+        'id',
+        'invoice_id',
+        'position',
+        'description',
+        'quantity',
+        'unit_price_cents',
+        'vat_rate_bps',
+      ],
       seed.lines,
     ),
     ...[

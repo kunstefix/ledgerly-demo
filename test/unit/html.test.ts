@@ -16,9 +16,8 @@ describe('html', () => {
 
   it('joins arrays and drops empty values', () => {
     const items = ['<1>', '2'].map((item) => html`<li>${item}</li>`);
-    expect(html`<ul>${items}${null}${undefined}${false}</ul>`.value).toBe(
-      '<ul><li>&lt;1&gt;</li><li>2</li></ul>',
-    );
+    const list = html`<ul>${items}${null}${undefined}${false}</ul>`;
+    expect(list.value).toBe('<ul><li>&lt;1&gt;</li><li>2</li></ul>');
   });
 
   it('passes raw markup through', () => {

@@ -10,11 +10,11 @@ collection: Plans and billing
 Everything Ledgerly charges you is listed under **Billing → Billing invoices**, numbered
 `LB-…`. These are separate from the invoices you send your own clients.
 
-| Status         | Meaning                                                        |
-| -------------- | -------------------------------------------------------------- |
-| Paid           | Charged successfully.                                          |
-| Open           | The payment failed and is being retried.                       |
-| Uncollectible  | Every retry failed; the subscription was canceled.             |
+| Status        | Meaning                                            |
+| ------------- | -------------------------------------------------- |
+| Paid          | Charged successfully.                              |
+| Open          | The payment failed and is being retried.           |
+| Uncollectible | Every retry failed; the subscription was canceled. |
 
 You'll see one billing invoice per period (monthly or yearly), plus one for each prorated
 upgrade. Downgrade credits show as negative amounts.

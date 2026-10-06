@@ -78,7 +78,8 @@ export async function buildApp({ config, pool }: AppDeps): Promise<FastifyInstan
     async function (this: FastifyReply, request: FastifyRequest, options: PageOptions) {
       const loopback = await loadLoopbackConfig(config.loopbackConfigFile);
       const customer = request.customer;
-      const widget = customer && loopback ? await widgetTag(loopback, customer, config.now()) : null;
+      const widget =
+        customer && loopback ? await widgetTag(loopback, customer, config.now()) : null;
       const notice = (request.query as Record<string, string | undefined>)?.notice;
       const flash = options.flash ?? (notice ? (NOTICES[notice] ?? null) : null);
       return this.code(options.status ?? 200)

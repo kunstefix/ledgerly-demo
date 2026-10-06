@@ -138,13 +138,41 @@ Not automated: images pullable anonymously from GHCR, `docker compose up` servin
   images; reverting the merge commit and deleting the image tags undoes everything.
 
 ## Verification
-- [ ] `pnpm verify` (lint + typecheck + tests + format check)
-- [ ] `pnpm build`
-- [ ] `docker compose build` and `docker compose up`: :4000 serves, sign in as each
+- [x] `pnpm verify` (lint + typecheck + tests + format check)
+- [x] `pnpm build`
+- [x] `docker compose build` and `docker compose up`: :4000 serves, sign in as each
       persona, `/healthz` ok
-- [ ] `pnpm bugs:repro` against the compose db shows B1–B5
-- [ ] UI check on desktop and mobile width: no UI check command in CLAUDE.md; manual
+- [x] `pnpm bugs:repro` against the compose db shows B1–B5
+- [x] UI check on desktop and mobile width: no UI check command in CLAUDE.md; manual
       look at home, dashboard, invoices, billing at 1280px and 375px
 
 ## Deviations
-Filled in during the build if the implementation differs from the above.
+- **B1 symptom.** The spec describes B1 both as "charges the full new price" and as "uses
+  the elapsed fraction where it should use the remaining one". Those two descriptions
+  don't agree. I followed the mechanism. An upgrade late in the period is charged most of
+  the full price difference (`cus_alder`: about €56 instead of €14). One early in the
+  period is charged almost nothing. `PLANTED_BUGS.md` describes the actual behavior.
+- **Unplanned files:**
+  - `src/billing/actions.ts` (plan change and card update orchestration, which keeps the
+    routes thin).
+  - `scripts/seed/{sql,customers,build}.ts` (the generator split into parts).
+  - `test/integration/{global-setup,db,sql}.ts` (test harness).
+  - `public/favicon.svg`.
+  - Query modules live in `src/db/queries/{customers,subscriptions,invoices,billing}.ts`
+    as planned.
+- **Reader role in tests.** Global setup loads the three SQL files once into the default
+  database, which creates the cluster-wide `loopback_reader` role from the real
+  `support.sql`. Each test file then loads them into its own database. `support.sql` sets
+  the role's settings only when it creates the role, because parallel `ALTER ROLE ... SET`
+  statements race.
+- **Seed determinism test.** Two loads are compared with timestamps as minutes from load
+  time, not milliseconds. Rows anchored to the start of the month ("this month") don't
+  move with `now()`.
+- **Toolchain.** TypeScript 6.0 (typescript-eslint doesn't support 7 yet), pnpm 10.34.6.
+  Prettier has `embeddedLanguageFormatting: off`, because reformatting `html` templates
+  changes the strings they produce.
+- **UI check.** The Chrome extension wasn't connected, so I drove headless Chrome over CDP
+  with a script in the scratchpad, not committed. It took 7 screens at 1280px and 375px.
+  No horizontal overflow, and no console errors once the favicon was added.
+- **Seed countries.** Canada (`cus_maple`) and Norway (`cus_fjord`) are seeded alongside
+  the spec's list (DE, FR, ES, SI, US).
