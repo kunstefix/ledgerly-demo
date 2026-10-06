@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "description": "Read-only queries Loopback's agent may run against Ledgerly's support views. Each takes the signed-in customer's external id (cus_...) as $1.",
+  "queries": [
+    {
+      "name": "account_overview",
+      "description": "The customer's account: company and contact, plan and price, subscription status and current period, cancellation date, invoices issued this calendar month (drafts and deleted invoices excluded) against the plan's monthly limit, and the brand, last four digits and expiry of the card on file.",
+      "sql": "SELECT * FROM support.customer_account WHERE customer_id = $1"
+    },
+    {
+      "name": "recent_payments",
+      "description": "The customer's latest 20 payment attempts to Ledgerly, newest first: amount, succeeded or failed, failure code, which retry attempt it was (null for the first attempt) and the card's last four digits.",
+      "sql": "SELECT * FROM support.payments WHERE customer_id = $1 ORDER BY attempted_at DESC LIMIT 20"
+    },
+    {
+      "name": "billing_invoices",
+      "description": "What Ledgerly billed the customer, newest first: subscription renewals, prorated upgrades and credits (negative amounts). Open invoices show how many retries failed so far and when the next retry is scheduled.",
+      "sql": "SELECT * FROM support.billing_invoices WHERE customer_id = $1 ORDER BY created_at DESC LIMIT 24"
+    },
+    {
+      "name": "recent_invoices",
+      "description": "Invoices the customer created for their own clients in the last 90 days, newest first, including drafts and deleted ones (deleted_at set). Amounts are net subtotal, VAT and total in cents; issue_date and due_date are calendar dates.",
+      "sql": "SELECT * FROM support.recent_invoices WHERE customer_id = $1 ORDER BY created_at DESC LIMIT 50"
+    }
+  ]
+}
