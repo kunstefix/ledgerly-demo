@@ -17,7 +17,7 @@ approval before the next one starts. The `verifier` agent checks the work before
 
 ## Workflow commands
 
-- Default branch: `main`
+- Default branch: `master`
 - Install: `pnpm install --frozen-lockfile`
 - Verify (lint + typecheck + tests + format check): `pnpm verify`
 - Build: `pnpm build`; images: `docker compose build`

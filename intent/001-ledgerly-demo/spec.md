@@ -88,7 +88,7 @@ Each bug affects at least one seeded customer, and tests never assert the buggy 
 - R12. One Dockerfile with targets `app` (`ghcr.io/kunstefix/ledgerly-demo`) and `db`
   (`ghcr.io/kunstefix/ledgerly-demo-db`: `postgres:17` plus init SQL for schema, seed,
   views and role). Both multi-arch (`amd64`, `arm64`), built and pushed by GitHub
-  Actions on `main` with tags `latest` and the commit sha, and made public.
+  Actions on `master` with tags `latest` and the commit sha, and made public.
 - R13. `docker-compose.yml` here runs `db` and `app` standalone (port 4000) with
   `.env.example` defaults. Health endpoint `GET /healthz`.
 - R14. CI on pull requests: lint, typecheck, tests, format check, image build.
