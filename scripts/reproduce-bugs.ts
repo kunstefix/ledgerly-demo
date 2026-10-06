@@ -104,7 +104,7 @@ async function b4(): Promise<void> {
       WHERE i.customer_id = $1 AND i.deleted_at IS NULL
       GROUP BY i.id HAVING count(DISTINCT l.vat_rate_bps) = 1
          AND i.vat_cents <> round(i.subtotal_cents * max(l.vat_rate_bps) / 10000.0)::int
-      ORDER BY i.created_at DESC`,
+      ORDER BY i.subtotal_cents, i.created_at DESC`,
     [id],
   );
   const first = rows[0];

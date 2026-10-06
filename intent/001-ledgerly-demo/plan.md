@@ -1,6 +1,6 @@
 # Plan: Ledgerly demo app
 
-Status: approved <!-- draft | approved | done -->
+Status: done <!-- draft | approved | done -->
 Spec: ./spec.md
 Branch: worktree-001-ledgerly-demo (PR against `master`)
 
@@ -51,7 +51,7 @@ top nav, cards, tables, status badges, forms, and a single-column layout below 7
 | Id | Plan / place | Shows |
 |----|--------------|-------|
 | `cus_maple` | Starter, Canada (`America/Toronto`) | B3: 3 sent + 2 deleted/draft this month → "limit reached" at 5 |
-| `cus_alder` | Pro→Business upgrade 12 days into the period, Slovenia | B1: billing invoice charges full $99 instead of prorated difference |
+| `cus_alder` | Pro→Business upgrade 24 days into the period, Slovenia | B1: upgrade charged ≈ €56 instead of the prorated ≈ €14 (see Deviations) |
 | `cus_fjord` | Pro, Norway (EUR) | `card_declined` payment pending retry 2 of 3 |
 | `cus_lumen` | Pro, Spain | B2: card updated after 2 failures, next failure canceled the subscription |
 | `cus_kestrel` | Business, Germany | B4: an invoice whose total is 1 cent off the sum of its lines |
@@ -174,5 +174,12 @@ Not automated: images pullable anonymously from GHCR, `docker compose up` servin
 - **UI check.** The Chrome extension wasn't connected, so I drove headless Chrome over CDP
   with a script in the scratchpad, not committed. It took 7 screens at 1280px and 375px.
   No horizontal overflow, and no console errors once the favicon was added.
+- **Workflow config ships here.** The `.claude/` agents, hooks, skills and settings,
+  `CLAUDE.md` and `.gitignore` came in commit `19fe1e2`, before the spec. They aren't on
+  `master` yet, so they're part of this PR.
+- **Compose config mount.** Compose mounts the `./config/` directory read-only at
+  `/config`, and the app reads `/config/loopback.json`. The plan said "an optional
+  `./loopback.json` mount". A directory works even before Loopback's demo-setup has
+  written the file.
 - **Seed countries.** Canada (`cus_maple`) and Norway (`cus_fjord`) are seeded alongside
   the spec's list (DE, FR, ES, SI, US).
