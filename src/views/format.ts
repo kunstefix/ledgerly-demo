@@ -1,5 +1,6 @@
 import { html, type SafeHtml } from './html.js';
 
+/** Formats an amount in minor units (cents) as currency, like "€29.00". */
 export function money(cents: number, currency: string): string {
   return new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(cents / 100);
 }
