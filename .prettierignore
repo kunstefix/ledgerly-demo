@@ -1,0 +1,8 @@
+dist/
+node_modules/
+pnpm-lock.yaml
+db/seed.sql
+intent/
+.claude/
+CLAUDE.md
+.prettierrc

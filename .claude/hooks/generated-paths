@@ -1,0 +1,12 @@
+# Project-specific generated paths that guard-files.sh should block, one glob per line
+# (relative to the repo root). Examples:
+# src/generated/*
+# design-system/dist/*
+
+# Build output inside workspace packages and apps
+*/dist/*
+apps/web/.next/*
+*.tsbuildinfo
+
+# Drizzle Kit snapshots and journal: regenerate with `pnpm --filter @loopback/db db:generate`
+packages/db/migrations/meta/*
